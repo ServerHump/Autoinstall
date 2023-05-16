@@ -42,6 +42,10 @@ sudo mysql -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'${DB_HOST}'
 sudo wget ${MYBB_URL} -O /tmp/mybb.zip
 sudo unzip /tmp/mybb.zip -d ${INSTALL_DIR}
 
+# Move Upload directory to the root directory
+sudo mv ${INSTALL_DIR}/Upload/* ${INSTALL_DIR}
+sudo rm -rf ${INSTALL_DIR}/Upload
+
 # Set permissions
 sudo chown -R apache:apache ${INSTALL_DIR}
 sudo chmod -R 755 ${INSTALL_DIR}/inc/languages
