@@ -71,9 +71,10 @@ sudo chmod -R 755 ${INSTALL_DIR}/uploads
 sudo chmod -R 777 ${INSTALL_DIR}/cache
 sudo chmod -R 777 ${INSTALL_DIR}/uploads/avatars
 
+
 # Create configuration file
-sudo mv ${INSTALL_DIR}/inc/config.default.php ${INSTALL_DIR}/inc/config.php
-sudo chmod 777 ${INSTALL_DIR}/inc/config.php
+sudo cp ${INSTALL_DIR}/inc/config.default.php ${INSTALL_DIR}/inc/config.php
+sudo chmod 666 ${INSTALL_DIR}/inc/config.php
 
 # Configure MyBB database settings
 sudo sed -i "s/^\$config\['database'\]\['type'\] = 'mysqli';/\$config\['database'\]\['type'\] = 'mysql';/g" ${INSTALL_DIR}/inc/config.php
