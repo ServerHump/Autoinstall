@@ -77,11 +77,10 @@ sudo cp ${INSTALL_DIR}/inc/config.default.php ${INSTALL_DIR}/inc/config.php
 sudo chmod 666 ${INSTALL_DIR}/inc/config.php
 
 # Configure MyBB database settings
-sudo sed -i "s/^\$config\['database'\]\['type'\] = 'mysqli';/\$config\['database'\]\['type'\] = 'mysql';/g" ${INSTALL_DIR}/inc/config.php
-sudo sed -i "s/^\$config\['database'\]\['database'\] = 'mybb';/\$config\['database'\]\['database'\] = '${DB_NAME}';/g" ${INSTALL_DIR}/inc/config.php
-sudo sed -i "s/^\$config\['database'\]\['username'\] = 'mybbuser';/\$config\['database'\]\['username'\] = '${DB_USER}';/g" ${INSTALL_DIR}/inc/config.php
-sudo sed -i "s/^\$config\['database'\]\['password'\] = 'mypassword';/\$config\['database'\]\['password'\] = '${DB_PASSWORD}';/g" ${INSTALL_DIR}/inc/config.php
-sudo sed -i "s/^\$config\['database'\]\['hostname'\] = 'localhost';/\$config\['database'\]\['hostname'\] = '${DB_HOST}';/g" ${INSTALL_DIR}/inc/config.php
+sudo sed -i "s/'database_name_here'/'${DB_NAME}'/g" ${INSTALL_DIR}/inc/config.php
+sudo sed -i "s/'your_username'/'${DB_USER}'/g" ${INSTALL_DIR}/inc/config.php
+sudo sed -i "s/'your_password'/'${DB_PASSWORD}'/g" ${INSTALL_DIR}/inc/config.php
+sudo sed -i "s/'localhost'/'${DB_HOST}'/g" ${INSTALL_DIR}/inc/config.php
 
 # Restart services
 sudo systemctl restart httpd
