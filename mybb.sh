@@ -9,7 +9,7 @@ MYBB_URL=https://resources.mybb.com/downloads/mybb_1822.zip
 INSTALL_DIR=/var/www/html
 
 # Install required packages
-sudo dnf update -y
+#sudo dnf update -y
 sudo dnf install -y httpd mariadb mariadb-server php php-mysqlnd php-gd php-xml php-xmlrpc php-mbstring php-json php-zip unzip wget
 
 # Allow ports 443, 80, 8080, and SQL port in the firewall
