@@ -7,6 +7,8 @@ DB_PASSWORD=password
 DB_HOST=localhost
 WORDPRESS_URL=https://wordpress.org/latest.tar.gz
 INSTALL_DIR=/var/www/html
+SSL_DOMAIN=example.com
+SSL_EMAIL=admin@example.com
 
 # Install latest versions of PHP, MySQL, and MariaDB
 sudo dnf update -y
@@ -83,5 +85,15 @@ sudo systemctl restart httpd
 
 # Display wp-admin username and password
 echo "WordPress installed successfully!"
-echo "wp-admin username: admin"
-echo "wp-admin password: $(sudo cat /var/log/httpd/error_log | grep 'Password:' | tail -1 | awk '{print $
+
+# Install certbot (Let's Encrypt client)
+sudo dnf install -y certbot python3-certbot-apache
+
+# Obtain SSL certificate and configure automatic renewal
+sudo certbot --apache --agree-tos --email ${SSL_EMAIL} --redirect --non-interactive --domains ${SSL_DOMAIN}
+
+# Create a cron job for certificate renewal
+sudo echo "0 0 1 * * certbot renew --quiet" | sudo tee -a /etc/crontab > /dev/null
+
+echo "LetEncrypt SSL installed successfully!"
+
