@@ -12,6 +12,9 @@ INSTALL_DIR=/var/www/html
 #sudo dnf update -y
 sudo dnf install -y httpd mariadb mariadb-server php php-mysqlnd php-gd php-xml php-xmlrpc php-mbstring php-json php-zip unzip wget
 
+# Set memory limit in php.ini
+sudo sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php.ini
+
 # Allow ports 443, 80, 8080, and SQL port in the firewall
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --permanent --add-port=80/tcp
@@ -26,6 +29,21 @@ sudo firewall-cmd --permanent --add-port=143/tcp
 sudo firewall-cmd --permanent --add-port=110/tcp
 sudo firewall-cmd --permanent --add-port=995/tcp
 sudo firewall-cmd --reload
+
+# Allow mybb and required ports through SELinux
+#sudo semanage fcontext -a -t httpd_sys_rw_content_t "${INSTALL_DIR}(/.*)?"
+#sudo semanage port -a -t http_port_t -p tcp 80
+#sudo semanage port -a -t http_port_t -p tcp 8080
+#sudo semanage port -a -t http_port_t -p tcp 443
+#sudo semanage port -a -t mysql_port_t -p tcp 3306
+#sudo semanage port -a -t smtp_port_t -p tcp 25
+#sudo semanage port -a -t submission_port_t -p tcp 587
+#sudo semanage port -a -t smtps_port_t -p tcp 465
+#sudo semanage port -a -t alternate_smtp_port_t -p tcp 2525
+#sudo semanage port -a -t imap_port_t -p tcp 993
+#sudo semanage port -a -t pop_port_t -p tcp 110
+#sudo semanage port -a -t pop_port_t -p tcp 995
+#sudo restorecon -Rv ${INSTALL_DIR}
 
 # Start and enable services
 sudo systemctl start httpd
